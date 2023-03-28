@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="madicine_information_tree_view">
+        <field name="name">madicine.information.tree.view</field>
+        <field name="model">madicine.information</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="madicine_name"/>
+                <field name="reference_no"/>
+                <field name="company_name"/>
+                <field name="expiry_month"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="madicine_information_form_view">
+        <field name="name">madicine.information.form.view</field>
+        <field name="model">madicine.information</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_view_madicine_stock"
+                            type="object"
+                            class="btn btn-primary"
+                            string="Madicine Stock">
+                    </button>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_health_symptoms)d"
+                            type="action"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="Symptoms">
+                        </button>
+                    </div>
+                    <group>
+                        <field name="madicine_name"/>
+                        <field name="madicine_stock"/>
+                        <field name="reference_no"/>
+                        <field name="company_name"/>
+                        <field name="is_major"/>
+                        <field name="expiry_month"/>
+                        <field name="manufacture_date"/>
+                        <field name="symptoms_information_id"/>
+                        <field name="remaining_month"/>
+                        <field name="dosage_form"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_madicine_information" model="ir.actions.act_window">
+        <field name="name">Madicine Information</field>
+        <field name="res_model">madicine.information</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="madicine_information"
+            name="madicine"
+            sequence="1"/>
+
+    <menuitem id="madicine_information_deatils"
+            name="madicine"
+            parent="madicine_information"
+            action="action_madicine_information"
+            sequence="2"/>
+
+<!--     <menuitem id="school_infomation_menu"
+            name="Student"
+            parent="school_management_deatils"
+            action="action_student_information"
+            sequence="3"/> -->
+
+
+</odoo>

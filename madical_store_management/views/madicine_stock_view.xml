@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record model="ir.ui.view" id="madicine_stock_tree_view">
+        <field name="name">madicine.stock.tree.view</field>
+        <field name="model">madicine.stock</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="madicine_stock"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="madicine_stock_form_view">
+        <field name="name">madicine.stock.form.view</field>
+        <field name="model">madicine.stock</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="madicine_stock"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+ 	<record id="action_madicine_stock_information" model="ir.actions.act_window">
+        <field name="name">Madicine Stock Information</field>
+        <field name="res_model">madicine.stock</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+     <menuitem id="madicine_stock" name="Madicine Stock" parent="madicine_information" sequence="4" action="action_madicine_stock_information"/>
+</odoo>
