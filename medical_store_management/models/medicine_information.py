@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 
 class MedicineInformation(models.Model):
     _name = "medicine.information"
+    _rec_name = "medicine_name"
 
     medicine_id = fields.Char(string="Medicine Id", readonly=True)
     medicine_name = fields.Char(string="Medicine Name")
@@ -16,7 +17,8 @@ class MedicineInformation(models.Model):
     symptoms_information_id = fields.Many2one('health.symptoms',string='symptoms')
     remaining_month = fields.Integer(string="Remaining Motnth" ,compute="_compute_remaining_month")
     dosage_form = fields.Selection([('tablet','Tablet'),('capsule','Capsule'),('liquid','Liquid')],string="Dosage form")
-    symtops_id = fields.Many2one('health.symptoms',string="Symptoms Id")
+
+    # symtops_id = fields.Many2one('health.symptoms',string="Symptoms Id")
 
     
     @api.onchange("medicine_name")
@@ -42,16 +44,25 @@ class MedicineInformation(models.Model):
             'view_mode': 'tree,form'
         }
 
+
+    
+
     @api.model
     def create(self, vals):
         if not vals.get('medicine_id'):
             month = calendar.month_name[date.today().month]
             current_date = datetime.now().date().strftime('%Y-%m-%d')
             print(current_date)
+            print(type(current_date))
+            # print(":::::::::::::",vals["expiry_date"])
+            # print(type(vals["expiry_date"]))
             records = self.env['medicine.information'].search([('expiry_date','>',current_date)])
-            print("::::::::::::::::::",records)
+            print(":::::::::::::",records)
+            for rec in records:
+                print(":::::::",rec.medicine_name)
             seq = self.env["ir.sequence"].next_by_code('medicine.information')
             vals['medicine_id'] = seq[0:3]+'/'+month[0:3]+'/'+seq[6:]
+            
         return super(MedicineInformation,self).create(vals)
 
     def write(self,vals):

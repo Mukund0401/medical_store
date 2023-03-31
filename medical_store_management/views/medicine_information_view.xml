@@ -9,7 +9,6 @@
                 <field name="reference_no"/>
                 <field name="company_name"/>
                 <field name="expiry_date"/>
-                <field name="symtops_id"/>
             </tree>
         </field>
     </record>
@@ -18,13 +17,6 @@
         <field name="model">medicine.information</field>
         <field name="arch" type="xml">
             <form>
-                <header>
-                    <button name="action_symptoms_info"
-                            type="object"
-                            class="btn btn-primary"
-                            string="Symptoms">
-                    </button>
-                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="%(action_health_symptoms)d"

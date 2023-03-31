@@ -11,7 +11,8 @@
         'data/ir_sequence_data.xml',
         'views/medicine_information_view.xml',
         'views/health_symptoms_view.xml',
-        'views/medicine_stock_view.xml'
+        'views/medicine_stock_view.xml',
+        'views/medicine_symptoms_view.xml'
     ],
     "demo": [],
     "qweb": [],

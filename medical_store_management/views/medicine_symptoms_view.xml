@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	 <record model="ir.ui.view" id="medicine_symptoms_tree_view">
+        <field name="name">medicine.symptoms.tree.view</field>
+        <field name="model">medicine.symptoms</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="medicines_id"/>
+                <field name="symptoms_ids"/>
+            </tree>
+        </field>
+    </record>
+     <record model="ir.ui.view" id="medicine_symptoms_form_view">
+        <field name="name">medicine.symptoms.form.view</field>
+        <field name="model">medicine.symptoms</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <form>
+                        <group>
+                            <field name="medicines_id"/>
+                            <field name="symptoms_ids" widget='many2many_tags'/>
+                        </group>
+                    </form>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_medicine_symptoms_information" model="ir.actions.act_window">
+        <field name="name">medicine Symptoms Information</field>
+        <field name="res_model">medicine.symptoms</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="medicine_symptoms" name="medicine symptoms" parent="medicine_information" sequence="5" action="action_medicine_symptoms_information"/>
+</odoo>
