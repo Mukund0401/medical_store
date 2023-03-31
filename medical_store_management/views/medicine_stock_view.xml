@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record model="ir.ui.view" id="medicine_stock_tree_view">
+        <field name="name">medicine.stock.tree.view</field>
+        <field name="model">medicine.stock</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="medicine_name"/>
+                <field name="medicine_stock"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="medicine_stock_form_view">
+        <field name="name">medicine.stock.form.view</field>
+        <field name="model">medicine.stock</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <form>
+                        <field name="medicine_name"/>
+                        <field name="medicine_stock"/>
+                    </form>
+                </sheet>
+            </form>
+        </field>
+    </record>
+ 	<record id="action_medicine_stock_information" model="ir.actions.act_window">
+        <field name="name">medicine Stock Information</field>
+        <field name="res_model">medicine.stock</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+     <menuitem id="medicine_stock" name="medicine Stock" parent="medicine_information" sequence="4" action="action_medicine_stock_information"/>
+</odoo>

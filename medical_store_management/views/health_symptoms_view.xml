@@ -17,9 +17,21 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <h1>SYMPTOMS</h1>
                     <group>
                         <field name="name"/>
                     </group>
+                    <notebook>
+                        <page string="medicine">
+                            <field name="medicine_ids">
+                                <tree editable="bottom">
+                                    <field name="medicine_name"/>
+                                    <field name="reference_no"/>
+                                    <field name="company_name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -32,5 +44,5 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="health_symptoms" name="Health Symptoms" parent="madicine_information" sequence="3" action="action_health_symptoms"/>
+    <menuitem id="health_symptoms" name="Health Symptoms" parent="medicine_information" sequence="3" action="action_health_symptoms"/>
 </odoo>

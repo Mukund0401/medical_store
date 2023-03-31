@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-madical_store_management.access_madicine_information,access_madicine_information,madical_store_management.model_madicine_information,base.group_user,1,1,1,1
-madical_store_management.access_health_symptoms,access_health_symptoms,madical_store_management.model_health_symptoms,base.group_user,1,1,1,1
-madical_store_management.access_madicine_stock,access_madicine_stock,madical_store_management.model_madicine_stock,base.group_user,1,1,1,1

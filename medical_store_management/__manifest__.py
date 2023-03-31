@@ -8,9 +8,10 @@
     "depends": [],
     "data": [
         'security/ir.model.access.csv',
-        'views/madicine_information_view.xml',
+        'data/ir_sequence_data.xml',
+        'views/medicine_information_view.xml',
         'views/health_symptoms_view.xml',
-        'views/madicine_stock_view.xml'
+        'views/medicine_stock_view.xml'
     ],
     "demo": [],
     "qweb": [],
