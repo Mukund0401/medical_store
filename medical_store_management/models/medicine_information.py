@@ -14,7 +14,7 @@ class MedicineInformation(models.Model):
     is_major = fields.Boolean(string="Is Major?")
     expiry_date = fields.Date(string="Expiry Date")
     manufacture_date = fields.Date(string="Manufacture Date")
-    symptoms_information_id = fields.Many2one('health.symptoms',string='symptoms')
+    # symptoms_information_id = fields.Many2one('health.symptoms',string='symptoms')
     remaining_month = fields.Integer(string="Remaining Motnth" ,compute="_compute_remaining_month")
     dosage_form = fields.Selection([('tablet','Tablet'),('capsule','Capsule'),('liquid','Liquid')],string="Dosage form")
 
@@ -27,6 +27,13 @@ class MedicineInformation(models.Model):
             return
         self.company_name = "Zydus"
 
+    # @api.onchange('medicine_name')
+    # def onchange_name(self):
+    #     current_date = datetime.now().date().strftime('%Y-%m-%d')
+    #     records = self.env['medicine.information'].search([('expiry_date','<',current_date)])
+    #     self.medicine_name = records.medicine_name     
+
+
     @api.depends("expiry_date")
     def _compute_remaining_month(self):
         for rec in self:
@@ -36,13 +43,26 @@ class MedicineInformation(models.Model):
                 rec.remaining_month=today_date.month - rec.manufacture_date.month
 
 
-    def action_symptoms_info(self):
-        return {
+    # def action_symptoms_info(self):
+    #     return {
+    #         "type": "ir.actions.act_window",
+    #         "res_model": "health.symptoms",
+    #         "name":("Symptoms"),
+    #         'view_mode': 'tree,form'
+    #     }
+
+
+    def action_view_medicine_symptoms(self):
+        symptoms = self.env['medicine.symptoms'].search(
+            [('medicines_id', '=', self.id)])
+        action =  {
             "type": "ir.actions.act_window",
-            "res_model": "health.symptoms",
-            "name":("symptoms"),
+            "res_model": "medicine.symptoms",
+            "domain": [('medicines_id', '=', self.id)],
+            "name": ("Symptoms"),
             'view_mode': 'tree,form'
         }
+        return action
 
 
     
@@ -60,8 +80,8 @@ class MedicineInformation(models.Model):
             print(":::::::::::::",records)
             for rec in records:
                 print(":::::::",rec.medicine_name)
-            seq = self.env["ir.sequence"].next_by_code('medicine.information')
-            vals['medicine_id'] = seq[0:3]+'/'+month[0:3]+'/'+seq[6:]
+            # seq = self.env["ir.sequence"].next_by_code('medicine.information')
+            # vals['medicine_id'] = seq[0:3]+'/'+month[0:3]+'/'+seq[6:]
             
         return super(MedicineInformation,self).create(vals)
 
@@ -73,6 +93,30 @@ class MedicineInformation(models.Model):
                 raise ValidationError("You Can't Change Expiry Date")
         return super(MedicineInformation, self).write(vals)
 
+    def name_get(self):
+        result = []
+        for medicine in self:
+            if medicine.expiry_date:
+                name = medicine.medicine_name + ' [ '+str(medicine.expiry_date) + ' ]'
+                result.append((medicine.id,name))
+            else:
+                name = medicine.medicine_name
+                result.append((medicine.id,name))
+        return result
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        if name:
+            args = ['|',('medicine_name',operator,name),('reference_no',operator,name)]+args
+        return self._search(args,limit=limit,access_rights_uid=name_get_uid)
+
+    @api.model
+    def default_get(self,fields):
+        res = super(MedicineInformation,self).default_get(fields)
+        if 'company_name' in fields:
+            res['company_name']='Aktiv'
+        return res
 
     # def search(self, vals):
     #     records = self.env['medicine.information'].search([('expiry_date','<','current_date')])
